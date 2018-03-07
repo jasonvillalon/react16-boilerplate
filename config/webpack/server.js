@@ -33,42 +33,52 @@ const config = {
   },
 
   module: {
-    rules: [{
-      test: /\.(jpe?g|png|gif)$/i,
-      use: 'url-loader?limit=1000&name=images/[hash].[ext]',
-    },
-    {
-      test: /\.(jsx|js)$/,
-      use: 'babel-loader',
-    },
-    {
-      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      use: 'url-loader?limit=10000&mimetype=application/font-woff',
-    },
-    {
-      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-      use: 'file-loader',
-    },
-    {
-      test: /\.(css|scss)$/,
-      use: [
-        'isomorphic-style-loader',
-        'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]',
-        {
-          loader: 'sass-loader',
-        },
-      ],
-    },
-    // {
-    //   test: /\.scss$/,
-    //   use: [{
-    //     loader: 'style-loader', // creates style nodes from JS strings
-    //   }, {
-    //     loader: 'css-loader', // translates CSS into CommonJS
-    //   }, {
-    //     loader: 'sass-loader', // compiles Sass to CSS
-    //   }],
-    // },
+    rules: [
+      { test: /\.(js|jsx)$/, use: 'babel-loader' },
+      {
+        test: /\.(css|scss)$/,
+        include: path.resolve('./src/app'),
+        use: [
+          'isomorphic-style-loader',
+          // 'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]',
+          {
+            loader: 'css-loader',
+            options: {
+            // If you are having trouble with urls not resolving add this setting.
+            // See https://github.com/webpack-contrib/css-loader#url
+              sourceMap: true,
+              modules: true,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.eot(\?.*)?$/,
+        use: [{ loader: 'file-loader?name=fonts/[hash].[ext]' }],
+      },
+      {
+        test: /\.(woff|woff2)(\?.*)?$/,
+        use: [{ loader: 'file-loader?name=fonts/[hash].[ext]' }],
+      },
+      {
+        test: /\.ttf(\?.*)?$/,
+        use: [{ loader: 'url-loader?limit=10000&mimetype=application/octet-stream&name=fonts/[hash].[ext]' }],
+      },
+      {
+        test: /\.svg(\?.*)?$/,
+        use: [{ loader: 'url-loader?limit=10000&mimetype=image/svg+xml&name=fonts/[hash].[ext]' }],
+      },
+      {
+        test: /\.(jpe?g|png|gif)$/i,
+        use: [{ loader: 'url-loader?limit=1000&name=images/[hash].[ext]' }],
+      },
     ],
   },
 

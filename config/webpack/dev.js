@@ -40,20 +40,20 @@ const config = {
         include: path.resolve('./src/app'),
         use: [
           { loader: 'style-loader' },
-          { loader: 'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]' },
+          // { loader: 'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]' },
           {
-            loader: 'postcss-loader',
+            loader: 'css-loader',
             options: {
-              ident: 'postcss',
-              plugins: loader => [
-                require('postcss-import')({ root: loader.resourcePath }),
-                require('postcss-cssnext')(),
-                require('cssnano')(),
-              ],
+            // If you are having trouble with urls not resolving add this setting.
+            // See https://github.com/webpack-contrib/css-loader#url
+              sourceMap: true,
             },
           },
           {
             loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
           },
         ],
       },

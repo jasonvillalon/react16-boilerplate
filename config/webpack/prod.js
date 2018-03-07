@@ -5,7 +5,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const extractSass = new ExtractTextPlugin({
-  filename: '[name].[contenthash].css',
+  filename: 'css/[name].[contenthash].css',
   disable: process.env.NODE_ENV === 'development',
 });
 
@@ -100,11 +100,32 @@ const config = {
       {
         test: /\.(css|scss)$/,
         use: extractSass.extract({
-          use: [{
-            loader: 'css-loader',
-          }, {
-            loader: 'sass-loader',
-          }],
+          use: [
+            // { loader: 'style-loader' },
+            // 'isomorphic-style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+              // If you are having trouble with urls not resolving add this setting.
+              // See https://github.com/webpack-contrib/css-loader#url
+                url: false,
+                minimize: true,
+                sourceMap: false,
+                modules: true,
+                localIdentName: '[hash:base64]',
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                url: false,
+                minimize: true,
+                sourceMap: false,
+                modules: true,
+                localIdentName: '[hash:base64]',
+              },
+            },
+          ],
           // use style-loader in development
           fallback: 'style-loader',
         }),
@@ -134,7 +155,7 @@ const config = {
 
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new ExtractTextPlugin('css/[name].[hash].css'),
+    extractSass,
     new ManifestPlugin({
       fileName: '../manifest.json',
     }),
