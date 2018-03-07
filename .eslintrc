@@ -1,0 +1,28 @@
+{
+    "env": {
+        "browser": true,
+        "node": true,
+        "jasmine": true
+    },
+    "extends": "airbnb",
+    "rules": {
+        "global-require": "off",
+        "import/no-extraneous-dependencies": "off",
+        "import/prefer-default-export": "off",
+        "react/prefer-stateless-function": "off",
+        "function-paren-newline": "off",
+        "no-console": "error",
+        "no-underscore-dangle": "off",
+        "react/no-array-index-key": "off",
+        "react/require-default-props": "off",
+        "react/forbid-prop-types": "off",
+        "react/no-danger": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "webpack": {
+                "config": "config/webpack/dev.js"
+            }
+        }
+    }
+}

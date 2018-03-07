@@ -1,0 +1,12 @@
+.app {
+  display: flex;
+  flex-direction: row;
+  background: green;
+  span {
+    text-transform: uppercase;
+    flex: 1;
+  }
+}
+.label2 {
+  color: white;
+}
