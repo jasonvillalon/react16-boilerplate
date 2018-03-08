@@ -39,20 +39,27 @@ const config = {
         test: /\.(css|scss)$/,
         include: path.resolve('./src/app'),
         use: [
-          { loader: 'style-loader' },
-          // { loader: 'css-loader?modules&importLoaders=2&localIdentName=[local]___[hash:base64:5]' },
+          {
+            loader: 'style-loader',
+            options: {
+              sourceMap: true,
+              // modules: true,
+            },
+          },
           {
             loader: 'css-loader',
             options: {
             // If you are having trouble with urls not resolving add this setting.
             // See https://github.com/webpack-contrib/css-loader#url
               sourceMap: true,
+              modules: true,
             },
           },
           {
             loader: 'sass-loader',
             options: {
               sourceMap: true,
+              modules: true,
             },
           },
         ],
